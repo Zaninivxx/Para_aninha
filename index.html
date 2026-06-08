@@ -1,323 +1,117 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Para Aninha 🌻</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Nunito:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Nunito:wght@300;400;600;700&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    min-height: 100vh;
-    background: #fffbf7;
-    font-family: 'Nunito', sans-serif;
-    color: #4a2030;
-    overflow-x: hidden;
-  }
-
-  .floaters { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .dot {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0;
-    animation: floatUp linear infinite;
-  }
-  @keyframes floatUp {
-    0%   { transform: translateY(0) scale(1); opacity: 0.55; }
-    100% { transform: translateY(-110vh) scale(0.4); opacity: 0; }
-  }
-
-  .page {
-    position: relative; z-index: 1;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 3rem 1.5rem; text-align: center;
-    transition: opacity 0.7s ease;
-  }
-  .page.hidden { opacity: 0; pointer-events: none; position: absolute; width: 100%; top: 0; }
-
-  #page1 { background: #fffbf7; }
-
-  .sun {
-    width: 90px; height: 90px;
-    background: #ffe066;
-    border-radius: 50%;
-    box-shadow: 0 0 0 14px #fff5c0, 0 0 0 26px #fffadd;
-    margin-bottom: 2rem;
-    animation: fadeUp 0.9s ease 0.3s both, pulse 3s ease-in-out 1.5s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { box-shadow: 0 0 0 14px #fff5c0, 0 0 0 26px #fffadd; }
-    50%      { box-shadow: 0 0 0 20px #fff5c0, 0 0 0 36px #fffadd; }
-  }
-
-  .p1-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 6.5vw, 3.2rem);
-    color: #c95c2a;
-    line-height: 1.25;
-    animation: fadeUp 0.9s ease 0.6s both;
-  }
-  .p1-title em { font-style: italic; color: #e8874a; }
-
-  .p1-name {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(2.8rem, 9vw, 4.5rem);
-    color: #e8874a;
-    line-height: 1.1;
-    animation: fadeUp 0.9s ease 0.8s both;
-  }
-
-  .p1-sub {
-    margin-top: 1rem;
-    font-size: 1rem; font-weight: 300;
-    color: #9a6050; letter-spacing: 0.5px;
-    animation: fadeUp 0.9s ease 1s both;
-  }
-
-  .tap-area {
-    margin-top: 2.5rem;
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    cursor: pointer;
-    animation: fadeUp 0.9s ease 1.2s both;
-  }
-  .tap-emoji {
-    font-size: 3rem;
-    animation: bounce 1.6s ease-in-out infinite;
-    display: block;
-  }
-  @keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-10px); }
-  }
-  .tap-hint { font-size: 0.75rem; color: #c97a5a; letter-spacing: 2px; text-transform: uppercase; }
-
-  #page2 { background: linear-gradient(160deg, #fff8f2 0%, #fffbf7 100%); }
-
-  .chip {
-    display: inline-block;
-    background: #ffeee5; color: #c95c2a;
-    font-size: 0.72rem; letter-spacing: 3px;
-    text-transform: uppercase; border-radius: 50px;
-    padding: 0.3rem 1rem; margin-bottom: 1rem;
-  }
-
-  .p-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.7rem, 5vw, 2.5rem);
-    color: #8b3020; font-weight: 400;
-    line-height: 1.3; margin-bottom: 1.2rem;
-  }
-
-  .divider {
-    width: 50px; height: 2px;
-    background: linear-gradient(90deg, transparent, #e8874a, transparent);
-    margin: 0 auto 1.5rem;
-  }
-
-  .msg {
-    max-width: 500px;
-    font-size: 1.02rem; font-weight: 300;
-    line-height: 1.9; color: #5a3020;
-  }
-  .msg strong { font-weight: 600; color: #c95c2a; }
-
-  .bcard {
-    margin-top: 2rem; max-width: 440px;
-    background: #fff3ec;
-    border-left: 3px solid #e8874a;
-    border-radius: 0 14px 14px 0;
-    padding: 1.1rem 1.4rem; text-align: left;
-  }
-  .bverse {
-    font-family: 'Playfair Display', serif;
-    font-style: italic; font-size: 1rem;
-    color: #8b3020; line-height: 1.75;
-  }
-  .bref { margin-top: 0.5rem; font-size: 0.76rem; color: #c97a5a; letter-spacing: 1.5px; }
-
-  .btn {
-    margin-top: 2.2rem;
-    padding: 0.7rem 2.2rem;
-    background: #e8874a; color: #fff;
-    border: none; border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.85rem; font-weight: 600;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    cursor: pointer; transition: background 0.2s, transform 0.15s;
-  }
-  .btn:hover { background: #c95c2a; transform: translateY(-2px); }
-  .btn:active { transform: translateY(0); }
-
-  .btn-ghost {
-    margin-top: 1.5rem;
-    padding: 0.6rem 1.8rem;
-    background: none;
-    border: 1.5px solid #e8874a; color: #e8874a;
-    border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.8rem; font-weight: 600;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .btn-ghost:hover { background: #e8874a; color: #fff; }
-
-  #page3 { background: #fffbf7; }
-
-  .reasons-wrap {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem; max-width: 560px; width: 100%;
-    margin-top: 1.6rem;
-  }
-  .rcard {
-    background: #fff;
-    border: 1px solid #f5d8cc;
-    border-radius: 18px;
-    padding: 1.3rem 1.1rem; text-align: left;
-    transition: transform 0.2s;
-  }
-  .rcard:hover { transform: translateY(-3px); }
-  .ricon { font-size: 1.6rem; margin-bottom: 0.5rem; display: block; }
-  .rtext { font-size: 0.93rem; font-weight: 300; color: #5a3020; line-height: 1.65; }
-
-  #page4 { background: linear-gradient(160deg, #fff5ee 0%, #fffbf7 100%); }
-
-  .final-box {
-    max-width: 460px; width: 100%;
-    background: #fff;
-    border: 1px solid #f5d8cc;
-    border-radius: 22px;
-    padding: 2rem 1.8rem;
-    margin-top: 1.5rem;
-  }
-  .final-verse {
-    font-family: 'Playfair Display', serif;
-    font-style: italic; font-size: 1.08rem;
-    color: #8b3020; line-height: 1.8;
-  }
-  .final-ref { margin-top: 0.7rem; font-size: 0.76rem; color: #c97a5a; letter-spacing: 1.5px; }
-
-  .closing-msg {
-    max-width: 440px; margin-top: 1.8rem;
-    font-size: 0.98rem; font-weight: 300;
-    line-height: 1.85; color: #5a3020;
-  }
-
-  .signature {
-    margin-top: 2rem;
-    font-family: 'Playfair Display', serif;
-    font-style: italic; font-size: 1.8rem;
-    color: #e8874a;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+:root{
+  --bg:#fffaf6;
+  --cream:#fff3ec;
+  --paper:rgba(255,255,255,.76);
+  --orange:#e8874a;
+  --copper:#c85d2c;
+  --wine:#7d2f22;
+  --brown:#5a3020;
+  --soft:#f6d8c8;
+  --gold:#ffe066;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  background: radial-gradient(circle at 20% 10%, #fff4d3 0 9%, transparent 28%),
+              radial-gradient(circle at 88% 18%, #ffe1d1 0 8%, transparent 30%),
+              linear-gradient(135deg,#fffaf6 0%,#fff4ee 48%,#fffdf8 100%);
+  font-family:'Nunito',sans-serif;
+  color:var(--brown);
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(232,135,74,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(232,135,74,.05) 1px, transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(circle at center, black, transparent 78%);
+}
+.floaters,.petals,.sparkles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}.dot,.petal,.spark{position:absolute;opacity:0}.dot{border-radius:50%;filter:blur(.2px);animation:floatUp linear infinite}.petal{font-size:clamp(16px,2vw,28px);animation:petalFall linear infinite;filter:drop-shadow(0 12px 12px rgba(201,92,42,.12))}.spark{width:4px;height:4px;border-radius:50%;background:#ffd66b;box-shadow:0 0 14px #ffd66b;animation:sparkle 3s ease-in-out infinite}
+@keyframes floatUp{0%{transform:translateY(20vh) scale(.6);opacity:0}15%{opacity:.55}100%{transform:translateY(-115vh) scale(1.15);opacity:0}}
+@keyframes petalFall{0%{transform:translate3d(0,-12vh,0) rotate(0deg);opacity:0}8%{opacity:.85}100%{transform:translate3d(var(--drift),112vh,0) rotate(520deg);opacity:0}}
+@keyframes sparkle{0%,100%{transform:scale(.2);opacity:0}45%{transform:scale(1);opacity:.8}}
+.cursor-glow{position:fixed;width:220px;height:220px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle, rgba(255,224,102,.30), rgba(232,135,74,.12) 38%, transparent 70%);transform:translate(-50%,-50%);transition:opacity .25s ease;mix-blend-mode:multiply;opacity:.75}.page{position:relative;z-index:3;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1.35rem;text-align:center;transition:opacity .75s ease,transform .75s ease}.page.hidden{opacity:0;pointer-events:none;position:absolute;width:100%;top:0;transform:scale(.985)}.glass{width:min(760px,94vw);padding:3rem 2rem;border:1px solid rgba(245,216,204,.8);background:linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,248,242,.62));border-radius:36px;box-shadow:0 28px 80px rgba(139,48,32,.10), inset 0 1px 0 rgba(255,255,255,.9);backdrop-filter:blur(16px);position:relative;overflow:hidden}.glass::before{content:"";position:absolute;inset:-40% -20%;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.62) 45%,transparent 60%);transform:translateX(-55%);animation:shine 7s ease-in-out infinite}@keyframes shine{0%,55%{transform:translateX(-60%) rotate(8deg)}75%,100%{transform:translateX(65%) rotate(8deg)}}.sun-wrap{position:relative;margin-bottom:1.2rem;animation:fadeUp .9s ease .15s both}.sun{width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff5a8,#ffe066 58%,#f7c743);box-shadow:0 0 0 16px rgba(255,245,192,.86),0 0 0 34px rgba(255,250,221,.8),0 18px 40px rgba(232,135,74,.18);animation:pulse 3.4s ease-in-out infinite}.sun-wrap::before,.sun-wrap::after{content:"🌻";position:absolute;font-size:1.8rem;animation:orbit 9s linear infinite}.sun-wrap::before{left:-42px;top:18px}.sun-wrap::after{right:-42px;bottom:12px;animation-direction:reverse}@keyframes pulse{50%{transform:scale(1.04);box-shadow:0 0 0 22px rgba(255,245,192,.72),0 0 0 44px rgba(255,250,221,.62),0 22px 55px rgba(232,135,74,.22)}}@keyframes orbit{to{transform:rotate(360deg)}}.hero-title{font-family:'Cormorant Garamond',serif;line-height:.92;color:var(--copper);letter-spacing:-1px;animation:fadeUp .9s ease .35s both}.hero-title .hello{display:block;font-size:clamp(2.3rem,7vw,4.1rem);font-weight:600}.hero-title .name{display:block;margin-top:.45rem;font-size:clamp(4.2rem,13vw,7.4rem);font-style:italic;font-weight:500;color:var(--orange);text-shadow:0 14px 35px rgba(232,135,74,.16)}.p1-sub{margin:1.7rem auto 0;max-width:560px;font-size:clamp(1rem,2.4vw,1.13rem);font-weight:300;color:#9a6050;letter-spacing:.3px;line-height:1.8;animation:fadeUp .9s ease .55s both}.tap-area{margin-top:2.6rem;display:flex;flex-direction:column;align-items:center;gap:.55rem;cursor:pointer;animation:fadeUp .9s ease .78s both}.tap-emoji{width:74px;height:74px;display:grid;place-items:center;border-radius:50%;font-size:2.8rem;background:linear-gradient(180deg,#fff9f2,#fff0e4);box-shadow:0 12px 36px rgba(232,135,74,.18);animation:heartBeat 1.6s ease-in-out infinite;transition:transform .25s ease}.tap-area:hover .tap-emoji{transform:translateY(-5px) scale(1.08)}.tap-hint{font-size:.75rem;color:#c97a5a;letter-spacing:2.8px;text-transform:uppercase;font-weight:700}@keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}.chip{display:inline-flex;align-items:center;gap:.45rem;background:rgba(255,238,229,.86);color:var(--copper);font-size:.72rem;letter-spacing:3px;text-transform:uppercase;border-radius:999px;padding:.42rem 1.05rem;margin-bottom:1.2rem;border:1px solid rgba(245,216,204,.75)}.p-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.15rem,6vw,4rem);color:var(--wine);font-weight:500;line-height:1.05;margin-bottom:1.15rem;letter-spacing:-.5px}.p-title em{font-style:italic;color:var(--orange)}.divider{width:76px;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:0 auto 1.8rem}.msg{max-width:590px;margin:auto;font-size:clamp(1rem,2.3vw,1.08rem);font-weight:300;line-height:1.95;color:var(--brown)}.msg strong{font-weight:700;color:var(--copper)}.bcard,.final-box{margin:2rem auto 0;max-width:500px;background:rgba(255,255,255,.78);border:1px solid rgba(245,216,204,.95);border-radius:24px;padding:1.35rem 1.5rem;box-shadow:0 18px 50px rgba(139,48,32,.08);transition:transform .25s ease,box-shadow .25s ease}.bcard:hover,.final-box:hover{transform:translateY(-6px);box-shadow:0 26px 70px rgba(139,48,32,.12)}.bverse,.final-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.18rem;color:var(--wine);line-height:1.7}.bref,.final-ref{margin-top:.55rem;font-size:.76rem;color:#c97a5a;letter-spacing:1.8px;text-transform:uppercase}.btn,.btn-ghost{margin-top:2.1rem;padding:.86rem 2.35rem;border-radius:999px;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}.btn{border:0;color:white;background:linear-gradient(135deg,#ee9b5d,#c95c2a);box-shadow:0 16px 32px rgba(201,92,42,.22)}.btn:hover{transform:translateY(-3px);box-shadow:0 22px 42px rgba(201,92,42,.28)}.btn-ghost{background:rgba(255,255,255,.5);border:1.5px solid var(--orange);color:var(--orange)}.btn-ghost:hover{background:var(--orange);color:white;transform:translateY(-3px)}.reasons-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;max-width:650px;width:100%;margin:1.8rem auto 0;perspective:900px}.rcard{background:rgba(255,255,255,.74);border:1px solid rgba(245,216,204,.9);border-radius:24px;padding:1.35rem 1.15rem;text-align:left;box-shadow:0 16px 42px rgba(139,48,32,.07);transition:transform .28s ease,box-shadow .28s ease}.rcard:hover{transform:translateY(-8px) rotateX(3deg) rotateY(-3deg);box-shadow:0 26px 65px rgba(139,48,32,.13)}.ricon{font-size:1.8rem;margin-bottom:.55rem;display:block}.rtext{font-size:.96rem;font-weight:300;color:var(--brown);line-height:1.72}.flower-ring{position:absolute;inset:auto auto 8% 5%;font-size:2rem;opacity:.65;animation:sway 4s ease-in-out infinite}.flower-ring.right{left:auto;right:6%;top:12%;bottom:auto;animation-delay:1s}@keyframes sway{50%{transform:translateY(-16px) rotate(8deg)}}.closing-msg{max-width:520px;margin:1.9rem auto 0;font-size:1rem;font-weight:300;line-height:1.9;color:var(--brown)}.signature{margin-top:2rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.25rem;color:var(--orange)}@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@media(max-width:520px){.glass{padding:2.5rem 1.2rem;border-radius:28px}.sun{width:82px;height:82px}.cursor-glow{display:none}.page{padding:2rem 1rem}.reasons-wrap{grid-template-columns:1fr}.hero-title .name{font-size:clamp(3.6rem,18vw,5rem)}}
 </style>
 </head>
 <body>
-
+<div class="cursor-glow" id="cursorGlow"></div>
 <div class="floaters" id="floaters"></div>
+<div class="petals" id="petals"></div>
+<div class="sparkles" id="sparkles"></div>
 
-<!-- PAGE 1 -->
 <div class="page" id="page1">
-  <div class="sun"></div>
-  <h1 class="p1-title">Oiii,</h1>
-  <p class="p1-name">Aninhaaa. 🌻</p>
-  <p class="p1-sub">Tem uma mensagem pequenininha esperando por você aqui.</p>
-  <div class="tap-area" onclick="goTo(2)">
-    <span class="tap-emoji">💛</span>
-    <span class="tap-hint">toque pra ver</span>
+  <div class="glass">
+    <div class="sun-wrap"><div class="sun"></div></div>
+    <h1 class="hero-title"><span class="hello">Oiii,</span><span class="name">Aninhaaa 🌻</span></h1>
+    <p class="p1-sub">Tem uma mensagem pequenininha esperando por você aqui.<br>Foi feita com calma, carinho e um pouquinho de luz.</p>
+    <div class="tap-area" onclick="goTo(2)"><span class="tap-emoji">💛</span><span class="tap-hint">toque pra ver</span></div>
   </div>
 </div>
 
-<!-- PAGE 2 -->
 <div class="page hidden" id="page2">
-  <span class="chip">só porque sim 🌼</span>
-  <h2 class="p-title">Hoje eu precisava<br>te contar uma coisa</h2>
-  <div class="divider"></div>
-  <p class="msg">
-    Não tem nada de especial acontecendo hoje — nenhum aniversário, nenhuma data.<br><br>
-    Só bateu aquela vontade de te falar que <strong>você alegra os meus dias sem nem perceber </strong><br><br>
-    Do jeitinho que você é, simples assim, você já é demaisss . 🌸
-  </p>
-  <div class="bcard">
-    <p class="bverse">"O coração alegre serve de bom remédio."</p>
-    <p class="bref">Provérbios 17:22</p>
+  <span class="flower-ring">🌼</span><span class="flower-ring right">🌻</span>
+  <div class="glass">
+    <span class="chip">só porque sim 🌼</span>
+    <h2 class="p-title">Hoje eu precisava<br><em>te contar uma coisa</em></h2>
+    <div class="divider"></div>
+    <p class="msg">Não tem nada de especial acontecendo hoje — nenhum aniversário, nenhuma data.<br><br>Só bateu aquela vontade de te falar que <strong>você alegra os meus dias sem nem perceber</strong>.<br><br>Do jeitinho que você é, simples assim, você já é demaisss. 🌸</p>
+    <div class="bcard"><p class="bverse">“O coração alegre serve de bom remédio.”</p><p class="bref">Provérbios 17:22</p></div>
+    <button class="btn" onclick="goTo(3)">Continuar →</button>
   </div>
-  <button class="btn" onclick="goTo(3)">Continuar →</button>
 </div>
 
-<!-- PAGE 3 -->
 <div class="page hidden" id="page3">
-  <span class="chip">pequenas coisas</span>
-  <h2 class="p-title">Sabe o que me faz<br>sorrir à toa? 😄</h2>
-  <div class="divider"></div>
-  <div class="reasons-wrap">
-    <div class="rcard">
-      <span class="ricon">🌤️</span>
-      <p class="rtext">Quando você aparece e deixa o ambiente mais leve.</p>
+  <div class="glass">
+    <span class="chip">pequenas coisas ✨</span>
+    <h2 class="p-title">Sabe o que me faz<br><em>sorrir à toa?</em></h2>
+    <div class="divider"></div>
+    <div class="reasons-wrap">
+      <div class="rcard"><span class="ricon">🌤️</span><p class="rtext">Quando você aparece e deixa o ambiente mais leve.</p></div>
+      <div class="rcard"><span class="ricon">😂</span><p class="rtext">A sua risadaaa, daquelas que fazem a gente rir junto sem saber o porquê.</p></div>
+      <div class="rcard"><span class="ricon">🌿</span><p class="rtext">A leveza com que você enfrenta as coisas. Me inspira.</p></div>
+      <div class="rcard"><span class="ricon">✨</span><p class="rtext">O cuidado que você tem com as pessoas. Isso é raro.</p></div>
     </div>
-    <div class="rcard">
-      <span class="ricon">😂</span>
-      <p class="rtext">A sua risadaaa, daquelas que fazem a gente rir junto sem saber o porquê.</p>
-    </div>
-    <div class="rcard">
-      <span class="ricon">🌿</span>
-      <p class="rtext">A leveza com que você enfrenta as coisas. Me inspira.</p>
-    </div>
-    <div class="rcard">
-      <span class="ricon">✨</span>
-      <p class="rtext">O cuidado que você tem com as pessoas. Isso é raro.</p>
-    </div>
+    <button class="btn" onclick="goTo(4)">Mais uma coisinha →</button>
   </div>
-  <button class="btn" onclick="goTo(4)">Mais uma coisinha →</button>
 </div>
 
-<!-- PAGE 4 -->
 <div class="page hidden" id="page4">
-  <span class="chip">Nem todo presente vem em uma caixa.🤍</span>
-  <h2 class="p-title">Alguns chegam em forma de palavras,<br><em style="font-family:'Playfair Display',serif; color:#e8874a;"></em></h2>
-  <div class="divider"></div>
-  <div class="final-box">
-    <p class="final-verse">"O coração alegre aformoseia o rosto."</p>
-    <p class="final-ref">Provérbios 15:13</p>
+  <span class="flower-ring">🌻</span><span class="flower-ring right">🤍</span>
+  <div class="glass">
+    <span class="chip">Nem todo presente vem em uma caixa 🤍</span>
+    <h2 class="p-title">Alguns chegam em forma<br><em>de palavras</em></h2>
+    <div class="divider"></div>
+    <div class="final-box"><p class="final-verse">“O coração alegre aformoseia o rosto.”</p><p class="final-ref">Provérbios 15:13</p></div>
+    <p class="closing-msg">Que seu dia seja leve, cheio de paz e de motivos para sorrir.<br>Nunca se esqueça do quanto você é especial. Deus abençoee. 💛</p>
+    <p class="signature">Com carinho, Vi 🌻</p>
+    <button class="btn-ghost" onclick="goTo(1)">Ver de novo ↺</button>
   </div>
-  <p class="closing-msg">
-    Que seu dia seja leve, cheio de paz e de motivos para sorrir.
-Nunca se esqueça do quanto você é especial, Deus abençoee. 💛
-  </p>
-  <p class="signature">Com carinho, Vi 🌻</p>
-  <button class="btn-ghost" onclick="goTo(1)">Ver de novo ↺</button>
 </div>
-
 <script>
-  (function() {
-    const colors = ['#ffe066','#f9b87a','#f7c5a0','#ffd6a0','#fffacc','#f5d8cc'];
-    const wrap = document.getElementById('floaters');
-    for (let i = 0; i < 22; i++) {
-      const d = document.createElement('div');
-      d.className = 'dot';
-      const size = 6 + Math.random() * 14;
-      d.style.cssText = `left:${Math.random()*100}vw;bottom:-20px;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${8+Math.random()*10}s;animation-delay:${Math.random()*12}s;`;
-      wrap.appendChild(d);
-    }
-  })();
-
-  function goTo(n) {
-    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-    const t = document.getElementById('page' + n);
-    t.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  document.getElementById('page1').classList.remove('hidden');
+const glow=document.getElementById('cursorGlow');
+window.addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});
+(function(){
+  const colors=['#ffe066','#f9b87a','#f7c5a0','#ffd6a0','#fffacc','#f5d8cc'];
+  const wrap=document.getElementById('floaters');
+  for(let i=0;i<36;i++){const d=document.createElement('div');d.className='dot';const s=5+Math.random()*18;d.style.cssText=`left:${Math.random()*100}vw;bottom:-30px;width:${s}px;height:${s}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${10+Math.random()*16}s;animation-delay:${Math.random()*14}s;`;wrap.appendChild(d)}
+  const petals=document.getElementById('petals'), icons=['🌸','🌼','🌻','🤍'];
+  for(let i=0;i<22;i++){const p=document.createElement('div');p.className='petal';p.textContent=icons[Math.floor(Math.random()*icons.length)];p.style.cssText=`left:${Math.random()*100}vw;--drift:${-80+Math.random()*160}px;animation-duration:${12+Math.random()*16}s;animation-delay:${Math.random()*12}s;`;petals.appendChild(p)}
+  const sp=document.getElementById('sparkles');
+  for(let i=0;i<42;i++){const s=document.createElement('div');s.className='spark';s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-delay:${Math.random()*4}s;`;sp.appendChild(s)}
+})();
+function goTo(n){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const t=document.getElementById('page'+n);t.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});burst();}
+function burst(){for(let i=0;i<12;i++){const e=document.createElement('span');e.textContent=i%3===0?'🌻':i%3===1?'✨':'💛';e.style.cssText=`position:fixed;left:50%;top:50%;z-index:50;pointer-events:none;font-size:${18+Math.random()*16}px;transition:all 900ms ease;`;document.body.appendChild(e);requestAnimationFrame(()=>{e.style.transform=`translate(${-160+Math.random()*320}px,${-180+Math.random()*100}px) rotate(${Math.random()*360}deg)`;e.style.opacity='0';});setTimeout(()=>e.remove(),950)}}
+document.querySelectorAll('.rcard,.bcard,.final-box,.tap-emoji,.btn,.btn-ghost').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`translateY(-5px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`});el.addEventListener('mouseleave',()=>el.style.transform='');});
+document.getElementById('page1').classList.remove('hidden');
 </script>
 </body>
 </html>
